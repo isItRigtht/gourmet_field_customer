@@ -53,12 +53,18 @@ importers:
       '@dcloudio/uni-quickapp-webview':
         specifier: 3.0.0-4020420240722002
         version: 3.0.0-4020420240722002(postcss@8.4.41)(rollup@4.21.0)(vue@3.4.21(typescript@5.5.4))
+      pinia:
+        specifier: ^2.2.2
+        version: 2.2.2(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
       vue:
         specifier: ^3.4.21
         version: 3.4.21(typescript@5.5.4)
       vue-i18n:
         specifier: ^9.1.9
         version: 9.14.0(vue@3.4.21(typescript@5.5.4))
+      vue-icons-plus:
+        specifier: ^0.1.0
+        version: 0.1.0(vue@3.4.21(typescript@5.5.4))
     devDependencies:
       '@dcloudio/types':
         specifier: ^3.4.8
@@ -72,15 +78,33 @@ importers:
       '@dcloudio/uni-stacktracey':
         specifier: 3.0.0-4020420240722002
         version: 3.0.0-4020420240722002
+      '@dcloudio/uni-ui':
+        specifier: ^1.5.6
+        version: 1.5.6
       '@dcloudio/vite-plugin-uni':
         specifier: 3.0.0-4020420240722002
         version: 3.0.0-4020420240722002(postcss@8.4.41)(rollup@4.21.0)(vite@5.2.8(@types/node@22.5.0)(sass@1.77.8)(terser@5.31.6))(vue@3.4.21(typescript@5.5.4))
+      '@uni-helper/uni-app-types':
+        specifier: 1.0.0-alpha.3
+        version: 1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+      '@uni-helper/uni-types':
+        specifier: 1.0.0-alpha.3
+        version: 1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(@uni-helper/uni-cloud-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(@uni-helper/uni-ui-types@1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+      '@uni-helper/uni-ui-types':
+        specifier: 1.0.0-alpha.3
+        version: 1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
       '@vue/runtime-core':
         specifier: ^3.4.21
         version: 3.4.38
       '@vue/tsconfig':
         specifier: ^0.1.3
         version: 0.1.3(@types/node@22.5.0)
+      miniprogram-api-typings:
+        specifier: ^3.12.3
+        version: 3.12.3
+      pinia-plugin-persistedstate:
+        specifier: ^3.2.1
+        version: 3.2.1(pinia@2.2.2(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -816,6 +840,9 @@ packages:
   '@dcloudio/uni-stat@3.0.0-4020420240722002':
     resolution: {integrity: sha512-eLiNyyGlaHuEtNOBLIcr7x4+aEsg7IEHq8RlLl21zQcpvDAFaa3IwMtyMaLZa5UUg/LPQA6vITCHx/O2R0uXrQ==}
 
+  '@dcloudio/uni-ui@1.5.6':
+    resolution: {integrity: sha512-jmb98PasFvZkrIDXGh94GbdWg2/jyhgs1HUG+bU8eyL7Ltias/5XBz4q8w9RXyWUfqepJRqapPA2IIQpLCuTIg==}
+
   '@dcloudio/vite-plugin-uni@3.0.0-4020420240722002':
     resolution: {integrity: sha512-+SYpD22swzwOtyiaOWyknRFpkc2YD8UNFoz+fAVEE6GEK48kvWAP1KpeY8iVsTObkrTs+1Oz4yr8QGZVqE3ksg==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -1410,6 +1437,38 @@ packages:
 
   '@types/yargs@16.0.9':
     resolution: {integrity: sha512-tHhzvkFXZQeTECenFoRljLBYPZJ7jAVxqqtEI0qTLOmuultnFp4I9yKE17vTuhf7BkhCu7I4XuemPgikDVuYqA==}
+
+  '@uni-helper/uni-app-types@1.0.0-alpha.3':
+    resolution: {integrity: sha512-lhSpVroEUxzre1vzKAckg85CFLUpn6vw9L2FDO1d8cd9JtMstlXkYmIn/Oz8tqzXxQ1sOgd3YcwoQmkXsw+Oxw==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      typescript: ^5.5.4
+      vue: ^3.4.21
+
+  '@uni-helper/uni-cloud-types@1.0.0-alpha.3':
+    resolution: {integrity: sha512-rFyWXR2C3XQ59MzLvhSFBV0jFzY6NvZ7KKxTsOB1eVkt9VBFXiCHGr3tE8X5yG9ZslUdye1W+whZ25d8RhmQTQ==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      typescript: ^5.5.4
+      vue: ^3.4.21
+
+  '@uni-helper/uni-types@1.0.0-alpha.3':
+    resolution: {integrity: sha512-wFGaFTY9coLZ9us1SlUPxPhOcQd3bvPmvkpi3CvQANLMVVnaqp3WY/vlrr4rZBQgYeePnkdm7rRxnDLPmJS24A==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      '@uni-helper/uni-app-types': 1.0.0-alpha.3
+      '@uni-helper/uni-cloud-types': 1.0.0-alpha.3
+      '@uni-helper/uni-ui-types': 1.0.0-alpha.3
+      typescript: ^5.5.4
+      vue: ^3.4.21
+
+  '@uni-helper/uni-ui-types@1.0.0-alpha.3':
+    resolution: {integrity: sha512-4laNtsQOJYFszvFcxMJfLwcruh/Qx2tsKMyG7+9J2ORCUMJ3HnLsfyCkMkqP8Jj3jwHEgN0XzKzueJaCgIAUiA==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      '@uni-helper/uni-app-types': 1.0.0-alpha.3
+      typescript: ^5.5.4
+      vue: ^3.4.21
 
   '@vitejs/plugin-legacy@5.4.2':
     resolution: {integrity: sha512-hlyyQL+wEIyOWdwsUKX+0g3kBU4AbHmVzHarLvVKiGGGqLIYjttMvvjk6zGY8RD9dab6QuFNhDoxg0YFhQ26xA==}
@@ -2652,6 +2711,9 @@ packages:
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
+  miniprogram-api-typings@3.12.3:
+    resolution: {integrity: sha512-o7bOfrU28MEMCBWo83nXv0ROQSBFxJcfCl4f2wTYqah64ipC5RGqLJfvWJTWhlQt2ECVwspSzM8LgvnfMo7TEQ==}
+
   mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
@@ -2815,6 +2877,23 @@ packages:
   pify@2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
+
+  pinia-plugin-persistedstate@3.2.1:
+    resolution: {integrity: sha512-MK++8LRUsGF7r45PjBFES82ISnPzyO6IZx3CH5vyPseFLZCk1g2kgx6l/nW8pEBKxxd4do0P6bJw+mUSZIEZUQ==}
+    peerDependencies:
+      pinia: ^2.0.0
+
+  pinia@2.2.2:
+    resolution: {integrity: sha512-ja2XqFWZC36mupU4z1ZzxeTApV7DOw44cV4dhQ9sGwun+N89v/XP7+j7q6TanS1u1tdbK4r+1BUx7heMaIdagA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
 
   pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
@@ -3376,11 +3455,27 @@ packages:
       terser:
         optional: true
 
+  vue-demi@0.14.10:
+    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-i18n@9.14.0:
     resolution: {integrity: sha512-LxmpRuCt2rI8gqU+kxeflRZMQn4D5+4M3oP3PWZdowW/ePJraHqhF7p4CuaME52mUxdw3Mmy2yAUKgfZYgCRjA==}
     engines: {node: '>= 16'}
     peerDependencies:
       vue: ^3.0.0
+
+  vue-icons-plus@0.1.0:
+    resolution: {integrity: sha512-XeoSBF+Ay+E2syEWE7GfMlDXOALQ1VAF9zhlexMgdl2LJsDYXTZlLkLGw6/tpnUKojZZugY2vDGgnEM9ed7PqQ==}
+    peerDependencies:
+      vue: '*'
 
   vue-router@4.4.3:
     resolution: {integrity: sha512-sv6wmNKx2j3aqJQDMxLFzs/u/mjA9Z5LCgy6BE0f7yFWMjrPLnS/sPNn8ARY/FXw6byV18EFutn5lTO6+UsV5A==}
@@ -4890,6 +4985,8 @@ snapshots:
       - ts-node
       - vue
 
+  '@dcloudio/uni-ui@1.5.6': {}
+
   '@dcloudio/vite-plugin-uni@3.0.0-4020420240722002(postcss@8.4.41)(rollup@4.21.0)(vite@5.2.8(@types/node@22.5.0)(sass@1.77.8)(terser@5.31.6))(vue@3.4.21(typescript@5.5.4))':
     dependencies:
       '@babel/core': 7.25.2
@@ -5630,6 +5727,30 @@ snapshots:
   '@types/yargs@16.0.9':
     dependencies:
       '@types/yargs-parser': 21.0.3
+
+  '@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))':
+    dependencies:
+      typescript: 5.5.4
+      vue: 3.4.21(typescript@5.5.4)
+
+  '@uni-helper/uni-cloud-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))':
+    dependencies:
+      typescript: 5.5.4
+      vue: 3.4.21(typescript@5.5.4)
+
+  '@uni-helper/uni-types@1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(@uni-helper/uni-cloud-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(@uni-helper/uni-ui-types@1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))':
+    dependencies:
+      '@uni-helper/uni-app-types': 1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+      '@uni-helper/uni-cloud-types': 1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+      '@uni-helper/uni-ui-types': 1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+      typescript: 5.5.4
+      vue: 3.4.21(typescript@5.5.4)
+
+  '@uni-helper/uni-ui-types@1.0.0-alpha.3(@uni-helper/uni-app-types@1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)))(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))':
+    dependencies:
+      '@uni-helper/uni-app-types': 1.0.0-alpha.3(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+      typescript: 5.5.4
+      vue: 3.4.21(typescript@5.5.4)
 
   '@vitejs/plugin-legacy@5.4.2(terser@5.31.6)(vite@5.2.8(@types/node@22.5.0)(sass@1.77.8)(terser@5.31.6))':
     dependencies:
@@ -7171,6 +7292,8 @@ snapshots:
 
   minimist@1.2.8: {}
 
+  miniprogram-api-typings@3.12.3: {}
+
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
@@ -7305,6 +7428,18 @@ snapshots:
   picomatch@2.3.1: {}
 
   pify@2.3.0: {}
+
+  pinia-plugin-persistedstate@3.2.1(pinia@2.2.2(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))):
+    dependencies:
+      pinia: 2.2.2(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4))
+
+  pinia@2.2.2(typescript@5.5.4)(vue@3.4.21(typescript@5.5.4)):
+    dependencies:
+      '@vue/devtools-api': 6.6.3
+      vue: 3.4.21(typescript@5.5.4)
+      vue-demi: 0.14.10(vue@3.4.21(typescript@5.5.4))
+    optionalDependencies:
+      typescript: 5.5.4
 
   pirates@4.0.6: {}
 
@@ -7835,11 +7970,19 @@ snapshots:
       sass: 1.77.8
       terser: 5.31.6
 
+  vue-demi@0.14.10(vue@3.4.21(typescript@5.5.4)):
+    dependencies:
+      vue: 3.4.21(typescript@5.5.4)
+
   vue-i18n@9.14.0(vue@3.4.21(typescript@5.5.4)):
     dependencies:
       '@intlify/core-base': 9.14.0
       '@intlify/shared': 9.14.0
       '@vue/devtools-api': 6.6.3
+      vue: 3.4.21(typescript@5.5.4)
+
+  vue-icons-plus@0.1.0(vue@3.4.21(typescript@5.5.4)):
+    dependencies:
       vue: 3.4.21(typescript@5.5.4)
 
   vue-router@4.4.3(vue@3.4.21(typescript@5.5.4)):

@@ -1,13 +1,26 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "isolatedModules": true,
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types"]
+    "types": [
+      "@dcloudio/types",              // uni-app API类型
+      "miniprogram-api-typings",      // 原生微信小程序类型
+      "@uni-helper/uni-types",        // uni-helper类型
+      "vue-icons-plus",               // vue-icons-plus类型 
+    ]
+  },
+  "vueCompilerOptions": {
+    "plugins": ["@uni-helper/uni-types/volar-plugin"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
