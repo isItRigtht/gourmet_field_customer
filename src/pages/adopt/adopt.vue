@@ -1,8 +1,9 @@
-<template>
-  <div class="field">adopt</div>
-</template>
+<script setup lang="ts">
 
-<script lang="ts" setup>
 </script>
 
-<style scoped></style>
+<template>
+  adpot
+</template>
+
+<style scoped lang="scss"></style>

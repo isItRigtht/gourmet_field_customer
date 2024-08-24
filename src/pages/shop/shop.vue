@@ -1,8 +1,11 @@
-<template>
-  <div class="shop">shop</div>
-</template>
+<script setup lang="ts">
 
-<script lang="ts" setup>
 </script>
 
-<style scoped></style>
+<template>
+  shop
+</template>
+
+<style scoped lang="scss">
+
+</style>
