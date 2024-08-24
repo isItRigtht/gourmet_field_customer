@@ -3,6 +3,7 @@ import NavigationBar from './components/NavigationBar.vue'
 import IndexSwiper from './components/IndexSwiper.vue'
 import OurAdvantage from './components/OurAdvantage.vue'
 import HotNews from './components/HotNews.vue'
+import FunctionPanel from './components/FunctionPanel.vue'
 </script>
 <template>
   <!-- 头部自定义导航栏 -->
@@ -14,6 +15,7 @@ import HotNews from './components/HotNews.vue'
   <!-- 热点新闻 -->
   <HotNews />
   <!-- 功能面板 -->
+  <FunctionPanel />
 </template>
 
 <style lang="scss" scoped></style>

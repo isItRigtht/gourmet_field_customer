@@ -42,12 +42,14 @@
 			}
 		}
 	],
+	// 全局配置
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "食尚田园",
 		"navigationBarBackgroundColor": "#20c12b",
 		"backgroundColor": "#F8F8F8"
 	},
+	// 底部导航栏
 	"tabBar": {
 		"color": "#8a8a8a",
 		"selectedColor": "#20c12b",
@@ -83,5 +85,48 @@
 				"selectedIconPath": "static/tabBar/user_selected.png"
 			}
 		]
+	},
+	// 分包配置
+	"subPackages": [
+		{
+			// 子包的根目录
+			"root": "pagesIndex",
+			// 页面路径和窗口表现
+			"pages": [
+				{
+					"path": "activity/activity",
+					"style": {
+						"navigationBarTitleText": "农场活动"
+					}
+				},
+				{
+					"path": "camera/camera",
+					"style": {
+						"navigationBarTitleText": "农场监控"
+					}
+				},
+				{
+					"path": "signIn/signIn",
+					"style": {
+						"navigationBarTitleText": "每日签到"
+					}
+				},
+				{
+					"path": "exchange/exchange",
+					"style": {
+						"navigationBarTitleText": "积分兑换"
+					}
+				}
+			]
+		}
+	],
+	// 预下载规则
+	"preloadRule": {
+		"pages/index/index": {
+			"network": "all",
+			"packages": [
+				"pagesIndex"
+			]
+		}
 	}
 }
