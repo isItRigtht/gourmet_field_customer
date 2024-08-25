@@ -49,10 +49,11 @@ const onTapCategory = (item: any, index: number) => {
       </view>
       <scroll-view scroll-y>
         <view class="content">
+          <!-- TODO: 动态跳转 -->
           <navigator
             v-for="item in 16"
             class="goods"
-            url="/pages/"
+            url="/pagesShop/shopDetail/shopDetail"
             open-type="navigate"
             hover-class="navigator-hover"
           >
@@ -118,6 +119,7 @@ page {
         box-sizing: border-box;
         border-radius: 30rpx;
         background-color: white;
+        box-shadow: 5rpx 5rpx 10rpx rgba(142, 140, 140, 0.2);
         image {
           height: 260rpx;
           width: 100%;
@@ -126,6 +128,13 @@ page {
           padding: 5rpx 15rpx;
           font-size: 24rpx;
           color: black;
+        }
+        .price {
+          padding: 10rpx 20rpx;
+          align-self: start;
+          font-size: 24rpx;
+          font-weight: bold;
+          color: red;
         }
       }
     }
