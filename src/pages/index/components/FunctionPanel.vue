@@ -27,6 +27,10 @@
   height: 200rpx;
   justify-content: space-around;
   align-items: center;
+  background-color: #f4f6dd;
+  border-radius: 50rpx;
+  margin: 0 20rpx;
+  box-shadow:  5rpx 5rpx 10rpx rgba(0, 0, 0, 0.1);
   .function-item{
     display: flex;
     flex-direction: column;

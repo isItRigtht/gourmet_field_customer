@@ -16,7 +16,6 @@
       "@dcloudio/types",              // uni-app API类型
       "miniprogram-api-typings",      // 原生微信小程序类型
       "@uni-helper/uni-types",        // uni-helper类型
-      "vue-icons-plus",               // vue-icons-plus类型 
     ]
   },
   "vueCompilerOptions": {

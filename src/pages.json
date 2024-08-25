@@ -118,6 +118,28 @@
 					}
 				}
 			]
+		},
+		{
+			"root": "pagesField",
+			"pages": [
+				{
+					"path": "fieldDetail/fieldDetail",
+					"style": {
+						"navigationBarTitleText": "土地详情"
+					}
+				}
+			]
+		},
+		{
+			"root": "pagesShop",
+			"pages": [
+				{
+					"path": "shopDetail/shopDetail",
+					"style": {
+						"navigationBarTitleText": "商品详情"
+					}
+				}
+			]
 		}
 	],
 	// 预下载规则
@@ -126,6 +148,18 @@
 			"network": "all",
 			"packages": [
 				"pagesIndex"
+			]
+		},
+		"pages/field/field": {
+			"network": "all",
+			"packages": [
+				"pagesField"
+			]
+		},
+		"pages/shop/shop": {
+			"network": "all",
+			"packages": [
+				"pagesShop"
 			]
 		}
 	}
