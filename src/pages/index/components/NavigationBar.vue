@@ -18,13 +18,11 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
       <!-- logo文字 -->
       <text class="logo-text">{{ logoText }}</text>
     </view>
-    <!-- 搜索框组件 -->
-    <SearchBox />
   </view>
 </template>
 <style scoped lang="scss">
 .navbar {
-  height: 200rpx;
+  height: 130rpx;
   background-image: url('@/static/index/image.png');
   .logo {
     display: flex;

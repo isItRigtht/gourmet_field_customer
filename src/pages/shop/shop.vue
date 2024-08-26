@@ -107,7 +107,7 @@ page {
     }
     .content {
       padding: 10rpx;
-      background-color: rgb(215, 215, 215);
+      background-color: rgb(234, 233, 233);
       display: grid;
       grid-template-columns: repeat(2,1fr);
       grid-gap: 20rpx;

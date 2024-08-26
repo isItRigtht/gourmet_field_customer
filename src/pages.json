@@ -140,6 +140,58 @@
 					}
 				}
 			]
+		},
+		{
+			"root": "pagesAdopt",
+			"pages": [
+				{
+					"path": "adoptDetail/adoptDetail",
+					"style": {
+						"navigationBarTitleText": "认养详情"
+					}
+				}
+			]
+		},
+		{
+			"root": "pagesMy",
+			"pages": [
+				{
+					"path": "address/address",
+					"style": {
+						"navigationBarTitleText": "地址"
+					}
+				},
+				{
+					"path": "customerService/customerService",
+					"style": {
+						"navigationBarTitleText": "客服"
+					}
+				},
+				{
+					"path": "setting/setting",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
+				{
+					"path": "order/order",
+					"style": {
+						"navigationBarTitleText": "订单"
+					}
+				},
+				{
+					"path": "myField/myField",
+					"style": {
+						"navigationBarTitleText": "我的租地"
+					}
+				},
+				{
+					"path": "myAdopt/myAdopt",
+					"style": {
+						"navigationBarTitleText": "我的认养"
+					}
+				}
+			]
 		}
 	],
 	// 预下载规则
@@ -160,6 +212,18 @@
 			"network": "all",
 			"packages": [
 				"pagesShop"
+			]
+		},
+		"pages/adopt/adopt": {
+			"network": "all",
+			"packages": [
+				"pagesAdopt"
+			]
+		},
+		"pages/my/my": {
+			"network": "all",
+			"packages": [
+				"pagesMy"
 			]
 		}
 	}
