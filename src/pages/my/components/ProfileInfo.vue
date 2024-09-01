@@ -2,13 +2,26 @@
 
 <template>
   <view class="profile">
-    <image
+    <navigator
       class="avatar"
-      src="https://i0.hdslb.com/bfs/archive/520da431da83bc79373e15888ed2cfeb20307b2e.jpg"
-      mode="scaleToFill"
-    />
+      url="/pagesMy/profile/profile"
+      open-type="navigate"
+      hover-class="navigator-hover"
+    >
+      <image
+        src="https://i0.hdslb.com/bfs/archive/520da431da83bc79373e15888ed2cfeb20307b2e.jpg"
+        mode="scaleToFill"
+      />
+    </navigator>
     <view class="information">
-      <view class="name">法外狂徒张三</view>
+      <navigator
+        class="name"
+        url="/pagesMy/profile/profile"
+        open-type="navigate"
+        hover-class="navigator-hover"
+      >
+        法内狂徒罗翔
+      </navigator>
       <navigator
         class="address"
         url="/pagesMy/address/address"
@@ -50,6 +63,11 @@
     width: 150rpx;
     height: 150rpx;
     border-radius: 50%;
+    overflow: hidden;
+    image {
+      width: 100%;
+      height: 100%;
+    }
   }
   .information {
     flex: 1;
@@ -75,7 +93,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 20rpx;
-    .customer-service{
+    .customer-service {
       text-align: center;
     }
   }

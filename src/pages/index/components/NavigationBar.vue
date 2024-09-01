@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SearchBox from '@/components/SearchBox.vue'
 // 定义logo文字
 const logoText = ref('')
 logoText.value = '认养一田绿，收获四季鲜。'

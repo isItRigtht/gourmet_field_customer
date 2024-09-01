@@ -19,10 +19,13 @@ import SearchBox from '@/components/SearchBox.vue'
         hover-class="navigator-hover"
       >
         <!-- 商品图片 -->
-        <image
-          src="https://t9.baidu.com/it/u=1470780388,2064832163&fm=193"
-          mode="scaleToFill"
-        />
+        <view class="image">
+          <view class="logo">认</view>
+          <image
+            src="https://t9.baidu.com/it/u=1470780388,2064832163&fm=193"
+            mode="scaleToFill"
+          />
+        </view>
         <!-- 商品描述 -->
         <view class="desc">
           <view class="title">认养成都小黑猪,过年吃土猪</view>
@@ -56,9 +59,21 @@ import SearchBox from '@/components/SearchBox.vue'
       overflow: hidden;
       background-color: white;
       box-shadow: 5rpx 5rpx 20rpx rgba(142, 140, 140, 0.2);
-      image {
-        height: 280rpx;
-        width: 280rpx;
+      .image {
+        position: relative;
+        .logo {
+          position: absolute;
+          left: 30rpx;
+          font-size: 50rpx;
+          color: white;
+          padding: 10rpx;
+          background-color: #20c12b;
+          border-radius: 0 0 30rpx 30rpx;
+        }
+        image {
+          height: 280rpx;
+          width: 280rpx;
+        }
       }
       .desc {
         padding: 30rpx;

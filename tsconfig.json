@@ -1,10 +1,9 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "ignoreDeprecations": "5.0",
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "isolatedModules": true,
     "sourceMap": true,
     "baseUrl": ".",

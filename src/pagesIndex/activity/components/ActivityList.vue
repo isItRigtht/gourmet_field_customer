@@ -5,23 +5,23 @@
     <navigator
       v-for="item in 4"
       class="card"
-      url="/pagesField/fieldDetail/fieldDetail"
+      url="/pagesIndex/activityDetail/activityDetail"
       open-type="navigate"
       hover-class="navigator-hover"
     >
-      <view class="image">
-        <view class="logo">租</view>
-        <image
-          src="https://img1.baidu.com/it/u=3160719274,540765604&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=800"
-          mode="scaleToFill"
-        />
-      </view>
+      <image
+        src="https://img0.baidu.com/it/u=98749298,2586514689&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500"
+        mode="scaleToFill"
+      />
       <view class="content">
-        <view class="title">成都纯正天府绿道田地</view>
-        <view class="desc">在喧嚣城市中做一个悠闲的农夫</view>
+        <view class="title">都江堰枇杷采摘活动</view>
+        <view class="desc-and-time">
+          <view class="desc">让孩子体验采摘的快乐</view>
+          <view class="time">2024-9-1</view>
+        </view>
         <view class="bottom">
-          <view class="price">￥100/平方米/年</view>
-          <view class="button">立即租地</view>
+          <view class="price">￥100/人/次</view>
+          <view class="button">立即报名</view>
         </view>
       </view>
     </navigator>
@@ -37,20 +37,8 @@
     border-radius: 50rpx;
     box-shadow: 0 0 20rpx rgba(74, 74, 74, 0.2);
     background-color: white;
-    .image {
-      position: relative;
-      .logo {
-        position: absolute;
-        left: 30rpx;
-        font-size: 50rpx;
-        color: white;
-        padding: 10rpx;
-        background-color: #20c12b;
-        border-radius: 0 0 30rpx 30rpx;
-      }
-      image {
-        width: 100%;
-      }
+    image {
+      width: 100%;
     }
     .content {
       padding: 30rpx;
@@ -59,9 +47,14 @@
         font-size: 36rpx;
         font-weight: bold;
       }
-      .desc {
+      .desc-and-time{
+        display: flex;
+        padding-right: 20rpx;
+        justify-content: space-between;
+        .desc {
         margin-top: 10rpx;
         color: rgb(90, 90, 90);
+      }
       }
       .bottom {
         margin-top: 10rpx;
