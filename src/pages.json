@@ -123,12 +123,6 @@
 					"style": {
 						"navigationBarTitleText": "积分兑换"
 					}
-				},
-				{
-					"path": "activityDetail/activityDetail",
-					"style": {
-						"navigationBarTitleText": "活动详情"
-					}
 				}
 			]
 		},
@@ -172,12 +166,6 @@
 					"path": "address/address",
 					"style": {
 						"navigationBarTitleText": "地址"
-					}
-				},
-				{
-					"path": "customerService/customerService",
-					"style": {
-						"navigationBarTitleText": "客服"
 					}
 				},
 				{

@@ -4,21 +4,23 @@
   <view class="order">
     <view class="title-and-all">
       <view class="title">我的订单</view>
-      <view class="all">全部订单></view>
+      <navigator url="/pagesMy/order/order?type=0" class="all">
+        全部订单>
+      </navigator>
     </view>
     <view class="category">
-      <view class="to-pay todo">
-        <uni-icons type="wallet" color="" size="40" /> 待付款</view
-      >
-      <view class="to-send todo">
-        <uni-icons type="shop" color="" size="40" /> 代发货</view
-      >
-      <view class="to-receive todo">
-        <uni-icons type="paperplane" color="" size="40" /> 待收货</view
-      >
-      <view class="to-comment todo">
-        <uni-icons type="chat" color="" size="40" /> 待评价</view
-      >
+      <navigator url="/pagesMy/order/order?type=0" class="to-pay todo">
+        <uni-icons type="wallet" color="" size="40" /> 待付款
+      </navigator>
+      <navigator url="/pagesMy/order/order?type=0" class="to-send todo">
+        <uni-icons type="shop" color="" size="40" /> 代发货
+      </navigator>
+      <navigator url="/pagesMy/order/order?type=0" class="to-receive todo">
+        <uni-icons type="paperplane" color="" size="40" /> 待收货
+      </navigator>
+      <navigator url="/pagesMy/order/order?type=0" class="to-comment todo">
+        <uni-icons type="chat" color="" size="40" /> 待评价
+      </navigator>
     </view>
   </view>
 </template>

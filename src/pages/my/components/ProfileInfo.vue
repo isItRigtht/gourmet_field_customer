@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CustomerService from '@/components/CustomerService.vue'
+</script>
 
 <template>
   <view class="profile">
@@ -32,15 +34,10 @@
       </navigator>
     </view>
     <view class="config">
-      <navigator
-        class="customer-service"
-        url="/pagesMy/customerService/customerService"
-        open-type="navigate"
-        hover-class="navigator-hover"
-      >
-        <uni-icons type="phone" color="" size="20" />
-        <view class="text">官方客服</view>
-      </navigator>
+      <!-- 客服 -->
+      <view class="customer-service">
+        <CustomerService />
+      </view>
       <navigator
         class="setting"
         url="/pagesMy/setting/setting"
@@ -87,15 +84,13 @@
     }
   }
   .config {
-    width: 150rpx;
+    width: 120rpx;
     margin-right: 30rpx;
     margin-top: 20rpx;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 20rpx;
-    .customer-service {
-      text-align: center;
-    }
   }
 }
 </style>

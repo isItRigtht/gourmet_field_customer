@@ -1,11 +1,19 @@
 <script setup lang="ts">
 // 获取屏幕安全距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-console.log(typeof(safeAreaInsets.bottom))
 // 处理登录事件
-const onLogin = () => {
-  uni.switchTab({ url: '/pages/index/index' })
-  uni.showToast({ title: '登录成功', icon: 'success' })
+const onLogin = async () => {
+  const res = await uni.login()
+  console.log(res)
+    // 跳转到首页
+    uni.switchTab({
+      url: '/pages/index/index'
+    })
+    uni.showToast({
+      title: '登录成功',
+      icon: 'success'
+    })
+  
 }
 </script>
 

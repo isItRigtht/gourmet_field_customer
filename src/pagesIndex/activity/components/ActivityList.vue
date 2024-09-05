@@ -2,10 +2,9 @@
 
 <template>
   <view class="container">
-    <navigator
+    <view
       v-for="item in 4"
       class="card"
-      url="/pagesIndex/activityDetail/activityDetail"
       open-type="navigate"
       hover-class="navigator-hover"
     >
@@ -24,7 +23,7 @@
           <view class="button">立即报名</view>
         </view>
       </view>
-    </navigator>
+    </view>
   </view>
 </template>
 

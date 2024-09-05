@@ -20,7 +20,7 @@
         <view class="title">成都纯正天府绿道田地</view>
         <view class="desc">在喧嚣城市中做一个悠闲的农夫</view>
         <view class="bottom">
-          <view class="price">￥100/平方米/年</view>
+          <view class="price">￥100元/平方米/年</view>
           <view class="button">立即租地</view>
         </view>
       </view>

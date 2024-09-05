@@ -1,14 +1,30 @@
 <script setup lang="ts">
-// 获取屏幕安全区域
-const { safeAreaInsets } = uni.getSystemInfoSync()
-// 跳转首页
-const onTapIndex = () => {
-  uni.switchTab({ url: '/pages/index/index' })
+import FooterBar from '@/components/FooterBar.vue'
+import { PickerViewOnChangeEvent } from '@uni-helper/uni-types'
+import { ref } from 'vue'
+// 租赁周期数据
+const period = ref(['一年', '两年', '三年'])
+// 显示下标
+const index = ref()
+// 组件高度
+const componentHeight = ref(0)
+// 租赁按钮点击事件
+const onLease = async () => {
+  await uni.showToast({
+    title: '模拟支付成功',
+    icon: 'success'
+  })
+  // 跳转到我的租地页面
+  setTimeout(() => {
+    uni.navigateTo({
+      url: '/pagesMy/myField/myField'
+    })
+  }, 500)
 }
 </script>
 
 <template>
-  <view class="container">
+  <view class="container" :style="{ height: componentHeight + 10 + 'px' }">
     <!-- 轮播图 -->
     <swiper indicator-dots autoplay circular>
       <swiper-item v-for="item in 4">
@@ -57,6 +73,23 @@ const onTapIndex = () => {
         <uni-icons type="checkbox" color="#af551e" size="24" />
       </view>
     </view>
+    <!-- 租赁周期 -->
+    <picker
+      :range="period"
+      :value="index"
+      @change="(e: PickerViewOnChangeEvent) => (index = e.detail.value)"
+    >
+      <view class="period">
+        <view class="left">
+          <view class="symbol"></view>
+          <view class="title">租赁周期</view>
+        </view>
+        <view class="right"
+          >{{ period[index] || '请选择租赁周期' }}
+          <uni-icons type="right" color="red" size="15" />
+        </view>
+      </view>
+    </picker>
     <!-- 土地详情 -->
     <view class="detail">
       <view class="head">
@@ -71,27 +104,13 @@ const onTapIndex = () => {
         mode="scaleToFill"
       />
     </view>
-    <view
-      class="footer"
-      :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }"
-    >
-      <view class="icons">
-        <view @tap="onTapIndex" class="item">
-          <uni-icons type="home" color="#666666" size="24" />
-          <view class="text">首页</view>
-        </view>
-        <view class="item">
-          <uni-icons type="redo" color="#666666" size="24" />
-          <view class="text">分享</view>
-        </view>
-        <view class="item">
-          <uni-icons type="headphones" color="#666666" size="24" />
-          <view class="text">客服</view>
-        </view>
-      </view>
-      <view class="btn">立即租赁</view>
-    </view>
   </view>
+  <!-- 底部操作栏 -->
+  <FooterBar
+    @tapButton="onLease"
+    @getHeight="(height) => (componentHeight = height)"
+    title="立即租赁"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -135,6 +154,7 @@ const onTapIndex = () => {
   .select {
     margin: 20rpx;
     display: flex;
+    align-items: center;
     font-size: 24rpx;
     color: #666666;
   }
@@ -179,6 +199,19 @@ const onTapIndex = () => {
       }
     }
   }
+  .period {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10rpx 20rpx;
+    .left {
+      display: flex;
+      align-items: center;
+    }
+    .right {
+      color: red;
+    }
+  }
   .detail {
     .head {
       display: flex;
@@ -186,35 +219,9 @@ const onTapIndex = () => {
     }
   }
   .img {
-    background: pink;
     padding-bottom: 100rpx;
     image {
       width: 100%;
-    }
-  }
-  .footer {
-    position: fixed;
-    padding: 10rpx 80rpx;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffffe7;
-    font-size: 24rpx;
-    box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.836);
-    .icons {
-      display: flex;
-      flex: 1;
-      justify-content: space-between;
-      margin-right: 100rpx;
-    }
-    .btn {
-      padding: 20rpx 40rpx;
-      background-color: #20c12b;
-      color: white;
-      border-radius: 20rpx;
     }
   }
 }

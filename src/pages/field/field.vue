@@ -10,8 +10,6 @@ import FieldList from './components/FieldList.vue'
 <template>
   <!-- 搜索框 -->
   <view class="search"><SearchBox /></view>
-  <!-- 排序组件 -->
-  <SortGoods />
   <!-- 土地列表 -->
   <FieldList/>
 </template>
