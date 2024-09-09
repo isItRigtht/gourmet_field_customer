@@ -3,14 +3,13 @@
 <template>
   <view class="container">
     <view class="item">
-      <view class="title">成都小黑猪</view>
+      <view class="title">认养一只小黑猪，过年吃土猪</view>
       <view class="body"
         ><image
           src="https://t9.baidu.com/it/u=1470780388,2064832163&fm=193"
           mode="scaleToFill"
         />
         <view class="content">
-          <view class="type">认养一只小黑猪，过年吃土猪</view>
           <view class="period">认养数目：2头</view>
           <view class="deadline">收货日期：2025-06-02</view>
         </view>

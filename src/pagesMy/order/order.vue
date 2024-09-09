@@ -60,8 +60,10 @@ const currentIndex = ref(0)
               ><view class="count">x1</view></view
             >
           </view>
-          <view class="total-price">实付：￥98 <text>(免运费)</text></view>
-          <view class="action"><view class="btn">确认收货</view></view>
+          <view class="footer">
+            <view class="total-price">实付：￥98 <text>(免运费)</text></view>
+            <view class="action"><view class="btn">确认收货</view></view>
+          </view>
         </view>
       </swiper-item>
     </swiper>
@@ -157,23 +159,28 @@ page {
             }
           }
         }
-        .total-price {
+        .footer {
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
           align-items: center;
-          text {
-            font-size: 25rpx;
+          .total-price {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            text {
+              font-size: 25rpx;
+            }
           }
-        }
-        .action {
-          margin-top: 20rpx;
-          display: flex;
-          justify-content: flex-end;
-          .btn {
-            padding: 10rpx 20rpx;
-            background-color: #20c12b;
-            color: white;
-            border-radius: 20rpx;
+          .action {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            .btn {
+              padding: 10rpx 20rpx;
+              background-color: #20c12b;
+              color: white;
+              border-radius: 20rpx;
+            }
           }
         }
       }

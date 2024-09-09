@@ -14,28 +14,28 @@ const componentHeight = ref(0)
 // sku模拟数据
 const skuData = ref({
   _id: '002',
-  name: '迪奥香水',
+  name: '成都西红柿',
   goods_thumb:
-    'https://res.lancome.com.cn/resources/2020/9/11/15998112890781924_920X920.jpg?version=20200917220352530',
+    'https://img2.baidu.com/it/u=2699463816,353268376&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=1120',
   sku_list: [
     {
       _id: '004',
       goods_id: '002',
-      goods_name: '迪奥香水',
+      goods_name: '成都西红柿',
       image:
-        'https://res.lancome.com.cn/resources/2020/9/11/15998112890781924_920X920.jpg?version=20200917220352530',
-      price: 19800,
-      sku_name_arr: ['50ml/瓶'],
+        'https://img2.baidu.com/it/u=302335861,1966518666&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=667',
+      price: 1100,
+      sku_name_arr: ['精品小果一斤'],
       stock: 100
     },
     {
       _id: '005',
       goods_id: '002',
-      goods_name: '迪奥香水',
+      goods_name: '成都西红柿',
       image:
-        'https://res.lancome.com.cn/resources/2020/9/11/15998112890781924_920X920.jpg?version=20200917220352530',
-      price: 59800,
-      sku_name_arr: ['70ml/瓶'],
+        'https://img2.baidu.com/it/u=2699463816,353268376&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=1120',
+      price: 2100,
+      sku_name_arr: ['香甜大果一斤'],
       stock: 80
     }
   ],
@@ -44,13 +44,10 @@ const skuData = ref({
       name: '规格',
       list: [
         {
-          name: '20ml/瓶'
+          name: '精品小果一斤'
         },
         {
-          name: '50ml/瓶'
-        },
-        {
-          name: '70ml/瓶'
+          name: '香甜大果一斤'
         }
       ]
     }
