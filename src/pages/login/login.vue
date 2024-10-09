@@ -1,20 +1,26 @@
 <script setup lang="ts">
 // 获取屏幕安全距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
+const { safeAreaInsets } = uni.getSystemInfoSync();
+import { http } from '@/utils/http';
 // 处理登录事件
 const onLogin = async () => {
-  const res = await uni.login()
-  console.log(res)
-    // 跳转到首页
-    uni.switchTab({
-      url: '/pages/index/index'
-    })
-    uni.showToast({
-      title: '登录成功',
-      icon: 'success'
-    })
-  
-}
+  const codeInfo = await uni.login();
+  const res = await http({
+    method: 'POST',
+    url: '/login/wx',
+    data: {
+      code: codeInfo.code
+    }
+  });
+  // 跳转到首页
+  uni.switchTab({
+    url: '/pages/index/index'
+  });
+  uni.showToast({
+    title: '登录成功',
+    icon: 'success'
+  });
+};
 </script>
 
 <template>

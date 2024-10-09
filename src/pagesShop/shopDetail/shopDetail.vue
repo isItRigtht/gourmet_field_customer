@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import FooterBar from '@/components/FooterBar.vue'
-import { ref } from 'vue'
+import FooterBar from '@/components/FooterBar.vue';
+import { ref } from 'vue';
 // sku组件配置参数
 // 开关响应式数据
-const isShow = ref(false)
+const isShow = ref(false);
 // 点击打开sku组件
 const openSku = () => {
-  isShow.value = true
-  console.log('点击了')
-}
+  isShow.value = true;
+  console.log('点击了');
+};
 // 组件高度
-const componentHeight = ref(0)
+const componentHeight = ref(0);
 // sku模拟数据
 const skuData = ref({
   _id: '002',
@@ -52,7 +52,7 @@ const skuData = ref({
       ]
     }
   ]
-})
+});
 </script>
 
 <template>
