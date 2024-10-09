@@ -1,26 +1,88 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getHomeActivityListAPI, putHomeActivityChangeStateAPI } from '@/api';
+import { IHomeActivityListItem } from '@/types';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+const list = ref<IHomeActivityListItem[]>([]);
+const getList = async () => {
+  const res = await getHomeActivityListAPI();
+  list.value = res.result;
+};
+onLoad(() => {
+  getList();
+});
+// 报名
+const onSignIn = async(id:string)=>{
+  const res = await putHomeActivityChangeStateAPI(id);
+  if(res.msg === '成功') {
+    // 这里前端不用修改数据，发送给后端，数据库中修改成功后直接重新加载数据即可
+    // list.value.find(item => item.id === id).state = res.result.state;
+    uni.showToast({
+      title: '报名成功',
+      icon: 'success'
+    });
+  }else {
+    uni.showToast({
+      title: res.msg,
+     icon: 'none'
+    })
+  }
+  getList();
+}
+// 取消报名
+const onQuit = async (id: string) => {
+  // 确认弹窗
+  uni.showModal({
+    title: '提示',
+    content: '确定取消报名吗？',
+    showCancel: true,
+    confirmText: '确定',
+    cancelText: '取消',
+    success: async (success) => {
+      if (success.confirm) {
+        const res = await putHomeActivityChangeStateAPI(id);
+        if(res.msg === '成功') {
+          // 这里前端不用修改数据，发送给后端，数据库中修改成功后直接重新加载数据即可
+          // list.value.find(item => item.id === id).state = res.result.state;
+          uni.showToast({
+            title: '取消报名成功',
+            icon: 'none'
+          });
+        }else {
+          uni.showToast({
+            title: res.msg,
+            icon: 'none'
+          });
+        }
+      }
+      getList();
+    }
+  });
+};
+</script>
 
 <template>
   <view class="container">
     <view
-      v-for="item in 4"
+      v-for="item in list"
+      :key="item.id"
       class="card"
       open-type="navigate"
       hover-class="navigator-hover"
     >
-      <image
-        src="https://img0.baidu.com/it/u=98749298,2586514689&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500"
-        mode="scaleToFill"
-      />
+      <image :src="item.src" mode="scaleToFill" />
       <view class="content">
-        <view class="title">都江堰枇杷采摘活动</view>
+        <view class="title">{{ item.title }}</view>
         <view class="desc-and-time">
-          <view class="desc">让孩子体验采摘的快乐</view>
-          <view class="time">2024-9-1</view>
+          <view class="desc">{{ item.desc }}</view>
+          <view class="time">{{ item.time }}</view>
         </view>
         <view class="bottom">
-          <view class="price">￥100/人/次</view>
-          <view class="button">立即报名</view>
+          <view class="price">￥{{ item.price }}/人/次</view>
+          <view @tap="onQuit(item.id)" v-if="item.state" class="button-ban"
+            >取消报名</view
+          >
+          <view @tap="onSignIn(item.id)" v-else class="button">立即报名</view>
         </view>
       </view>
     </view>
@@ -46,14 +108,14 @@
         font-size: 36rpx;
         font-weight: bold;
       }
-      .desc-and-time{
+      .desc-and-time {
         display: flex;
         padding-right: 20rpx;
         justify-content: space-between;
         .desc {
-        margin-top: 10rpx;
-        color: rgb(90, 90, 90);
-      }
+          margin-top: 10rpx;
+          color: rgb(90, 90, 90);
+        }
       }
       .bottom {
         margin-top: 10rpx;
@@ -70,6 +132,13 @@
           padding: 10rpx;
           color: white;
           background-color: #20c12b;
+          border-radius: 10rpx;
+        }
+        .button-ban {
+          margin-right: 10rpx;
+          padding: 10rpx;
+          color: white;
+          background-color: rgb(245, 60, 60);
           border-radius: 10rpx;
         }
       }

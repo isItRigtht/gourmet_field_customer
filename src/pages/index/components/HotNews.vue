@@ -1,22 +1,14 @@
 <script setup lang="ts">
+import { getHomeNewsAPI } from '@/api';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+
 // 热点新闻数据 TODO: 调接口
-const hotNews = [
-  {
-    id: 1,
-    content: '2024年，中国将进入AI时代',
-    time: '2023-01-01'
-  },
-  {
-    id: 2,
-    content: '改革开放45周年,见证美好生活',
-    time: '2023-01-01'
-  },
-  {
-    id: 3,
-    content: '全面迈向小康社会，人民实现幸福生活',
-    time: '2023-01-01'
-  }
-]
+const hotNews = ref<string[]>([]);
+onLoad(async () => {
+  const res = await getHomeNewsAPI();
+  hotNews.value = res.result;
+});
 </script>
 
 <template>
@@ -24,8 +16,8 @@ const hotNews = [
     <view class="hot-news-title"> <text>最新</text> 动态</view>
     <uni-icons type="fire" color="red" size="20" />
     <swiper autoplay circular vertical class="hot-news-content">
-      <swiper-item v-for="item in hotNews" :key="item.id">
-        {{ item.content }}
+      <swiper-item v-for="item in hotNews" :key="item">
+        {{ item }}
       </swiper-item>
     </swiper>
   </view>
@@ -50,7 +42,7 @@ const hotNews = [
       color: red;
     }
   }
-  .hot-news-content{
+  .hot-news-content {
     display: flex;
     align-items: center;
     padding-left: 10rpx;

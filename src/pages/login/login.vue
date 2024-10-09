@@ -1,17 +1,15 @@
 <script setup lang="ts">
+import { postLoginWxAPI } from '@/api/login';
+import { useUserStore } from '@/stores';
+
 // 获取屏幕安全距离
 const { safeAreaInsets } = uni.getSystemInfoSync();
-import { http } from '@/utils/http';
 // 处理登录事件
 const onLogin = async () => {
   const codeInfo = await uni.login();
-  const res = await http({
-    method: 'POST',
-    url: '/login/wx',
-    data: {
-      code: codeInfo.code
-    }
-  });
+  const res = await postLoginWxAPI(codeInfo.code);
+  const userStore = useUserStore();
+  userStore.setUserInfo(res.result);
   // 跳转到首页
   uni.switchTab({
     url: '/pages/index/index'
