@@ -1,40 +1,58 @@
 <script setup lang="ts">
-import type { UniCalendarSelectedElement } from '@uni-helper/uni-types'
-import { ref } from 'vue'
-import dayjs from 'dayjs'
+import type { UniCalendarSelectedElement } from '@uni-helper/uni-types';
+import { ref } from 'vue';
+import dayjs from 'dayjs';
+import { getHomeAttendanceInfoAPI, putHomeAttendanceSignAPI } from '@/api';
+import { onLoad } from '@dcloudio/uni-app';
 // 签到数据响应式数组
-const signInData = ref<UniCalendarSelectedElement[]>([])
+const signInData = ref<UniCalendarSelectedElement[]>([]);
 // 积分响应式数据
-const score = ref(0)
+const score = ref(0);
+// 每日获取积分数
+const dailyGainPoints = 10;
+// 获取签到数据
+const getData = async () => {
+  const res = await getHomeAttendanceInfoAPI();
+  signInData.value = res.result.selectedDate.map((item) => ({
+    date: item,
+    info: '已签到'
+  }));
+  score.value = res.result.points;
+};
 // 点击签到事件
-const onSignIn = () => {
+const onSignIn = async () => {
   // 获取当前格式化日期
-  const date = dayjs().format('YYYY-MM-DD')
+  const date = dayjs().format('YYYY-MM-DD');
   // 判断今日是否已经签到
   if (signInData.value.some((item) => item.date === date)) {
     uni.showToast({
       title: '今日已签到',
       icon: 'none'
-    })
-    return
+    });
+    return;
   } else {
-    // 加入到签到数据中
-    signInData.value = [
-      ...signInData.value,
-      {
-        date,
-        info: '已签到'
-      }
-    ]
-    // 积分加10
-    score.value += 10
-    // 提示签到成功
-    uni.showToast({
-      title: '积分+10',
-      icon: 'success'
-    })
+    // 发送签到请求
+    const res = await putHomeAttendanceSignAPI(dailyGainPoints);
+    console.log(res);
+    if (res.msg === '成功') {
+      // 提示签到成功
+      uni.showToast({
+        title: `积分+${dailyGainPoints}`,
+        icon: 'success'
+      });
+      getData();
+    } else {
+      // 提示错误
+      uni.showToast({
+        title: res.msg,
+        icon: 'none'
+      });
+    }
   }
-}
+};
+onLoad(() => {
+  getData();
+});
 </script>
 
 <template>

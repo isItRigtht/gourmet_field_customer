@@ -12,23 +12,23 @@ onLoad(() => {
   getList();
 });
 // 报名
-const onSignIn = async(id:string)=>{
+const onSignIn = async (id: string) => {
   const res = await putHomeActivityChangeStateAPI(id);
-  if(res.msg === '成功') {
+  if (res.msg === '成功') {
     // 这里前端不用修改数据，发送给后端，数据库中修改成功后直接重新加载数据即可
     // list.value.find(item => item.id === id).state = res.result.state;
     uni.showToast({
       title: '报名成功',
       icon: 'success'
     });
-  }else {
+  } else {
     uni.showToast({
       title: res.msg,
-     icon: 'none'
-    })
+      icon: 'none'
+    });
   }
   getList();
-}
+};
 // 取消报名
 const onQuit = async (id: string) => {
   // 确认弹窗
@@ -41,14 +41,14 @@ const onQuit = async (id: string) => {
     success: async (success) => {
       if (success.confirm) {
         const res = await putHomeActivityChangeStateAPI(id);
-        if(res.msg === '成功') {
+        if (res.msg === '成功') {
           // 这里前端不用修改数据，发送给后端，数据库中修改成功后直接重新加载数据即可
           // list.value.find(item => item.id === id).state = res.result.state;
           uni.showToast({
-            title: '取消报名成功',
-            icon: 'none'
+            title: '取消成功',
+            icon: 'success'
           });
-        }else {
+        } else {
           uni.showToast({
             title: res.msg,
             icon: 'none'

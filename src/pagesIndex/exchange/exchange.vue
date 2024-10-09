@@ -1,18 +1,33 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { IHomePointsListItem } from "@/types";
+import { getHomePointsListAPI } from "@/api";
+import { onLoad } from "@dcloudio/uni-app";
+const list = ref<IHomePointsListItem[]>([]);
+// 获取数据
+const getList = async () => {
+  const res = await getHomePointsListAPI();
+  list.value = res.result;
+};
+
+onLoad(()=>{
+  getList();
+})
+</script>
 
 <template>
   <view class="container">
-    <view v-for="item in 4" class="item">
+    <view v-for="item in list" :key="item.id" class="item">
       <view class="image">
         <view class="logo">兑</view>
         <image
-          src="https://img0.baidu.com/it/u=4023460427,2256457718&fm=253&fmt=auto&app=138&f=JPEG?w=1200&h=800"
+          :src="item.cover"
           mode="scaleToFill"
         />
       </view>
-      <view class="desc">龙泉驿红苹果</view>
+      <view class="desc">{{ item.title }}</view>
       <view class="footer">
-        <view class="price">1000积分</view>
+        <view class="price">{{ item.cost }} 积分</view>
         <view class="exchange">兑换</view>
       </view>
     </view>
