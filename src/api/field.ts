@@ -20,7 +20,9 @@ export const getFieldDetailAPI = (id: string) => {
   });
 };
 
-/** 创建租地 */
+/** 
+ * 创建租地
+*/
 export const postFieldRentAPI = (data: IFieldRent) => {
   return http({
     url: '/field/rent',
@@ -28,3 +30,4 @@ export const postFieldRentAPI = (data: IFieldRent) => {
     data
   });
 };
+

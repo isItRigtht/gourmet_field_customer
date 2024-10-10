@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import SearchBox from '@/components/SearchBox.vue'
-import { ref } from 'vue'
-
+import { getShopListAPI } from '@/api/shop';
+import SearchBox from '@/components/SearchBox.vue';
+import { IShopList } from '@/types/shop';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref, watch } from 'vue';
 // 商品种类数据
 const shopType = ref([
   {
@@ -24,13 +26,25 @@ const shopType = ref([
     id: 5,
     name: '粮油'
   }
-])
-// 高亮下标
-const activeIndex = ref<number>(0)
-// 点击处理函数
-const onTapCategory = (item: any, index: number) => {
-  activeIndex.value = index
-}
+]);
+// 当前种类
+const currentCategory = ref(1);
+// 商品列表
+const list = ref<IShopList[]>([]);
+
+// 获取商品列表
+const getShopList = async (category: number) => {
+  const res = await getShopListAPI(category);
+  list.value = res.result;
+};
+
+onLoad(() => {
+  getShopList(currentCategory.value);
+});
+
+watch(currentCategory,()=>{
+  getShopList(currentCategory.value);
+})
 </script>
 
 <template>
@@ -39,31 +53,30 @@ const onTapCategory = (item: any, index: number) => {
     <view class="container">
       <view class="tab">
         <view
-          @tap="onTapCategory(item, index)"
-          v-for="(item, index) in shopType"
+          @tap="currentCategory = item.id"
+          v-for="item in shopType"
           :key="item.id"
           class="category"
-          :class="{ active: activeIndex === index }"
-          >{{ item.name }}</view
+          :class="{ active: currentCategory === item.id }"
         >
+          {{ item.name }}
+        </view>
       </view>
       <scroll-view scroll-y>
         <view class="content">
           <!-- TODO: 动态跳转 -->
           <navigator
-            v-for="item in 16"
+            v-for="item in list"
+            :key="item.id"
             class="goods"
-            url="/pagesShop/shopDetail/shopDetail"
+            :url="`/pagesShop/shopDetail/shopDetail?id=${item.id}`"
             open-type="navigate"
             hover-class="navigator-hover"
           >
-            <image
-              src="https://img0.baidu.com/it/u=3912263632,2759588619&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=566"
-              mode="scaleToFill"
-            />
+            <image :src="item.cover" mode="scaleToFill" />
             <!-- 只截取前10个字符 -->
-            <view class="desc">描述只截取前十个字符</view>
-            <view class="price">￥1.00</view>
+            <view class="desc">{{ item.title }}</view>
+            <view class="price">￥{{ item.price }}</view>
           </navigator>
         </view>
       </scroll-view>
@@ -109,7 +122,7 @@ page {
       padding: 10rpx;
       background-color: rgb(234, 233, 233);
       display: grid;
-      grid-template-columns: repeat(2,1fr);
+      grid-template-columns: repeat(2, 1fr);
       grid-gap: 20rpx;
       .goods {
         display: flex;

@@ -1,5 +1,23 @@
 <script setup lang="ts">
-import SearchBox from '@/components/SearchBox.vue'
+import { getAdoptListAPI } from '@/api/adopt';
+import SearchBox from '@/components/SearchBox.vue';
+import { IAdoptList } from '@/types/adopt';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+
+// 收货方式
+const ways = [null, '到期自提', '野餐加工', '冷链配送'];
+// 数据
+const list = ref<IAdoptList[]>([]);
+// 获取数据
+const getAdoptList = async () => {
+  const res = await getAdoptListAPI();
+  list.value = res.result;
+};
+
+onLoad(() => {
+  getAdoptList();
+});
 </script>
 
 <template>
@@ -9,29 +27,27 @@ import SearchBox from '@/components/SearchBox.vue'
       <SearchBox />
     </view>
     <!-- 认养展示内容 -->
-    <view class="content">
+    <view v-if="list.length" class="content">
       <!-- 展示商品 -->
       <navigator
-        v-for="item in 8"
+        v-for="item in list"
+        :key="item.id"
         class="item"
-        url="/pagesAdopt/adoptDetail/adoptDetail"
+        :url="`/pagesAdopt/adoptDetail/adoptDetail?id=${item.id}&price=${item.price}`"
         open-type="navigate"
         hover-class="navigator-hover"
       >
         <!-- 商品图片 -->
         <view class="image">
           <view class="logo">认</view>
-          <image
-            src="https://t9.baidu.com/it/u=1470780388,2064832163&fm=193"
-            mode="scaleToFill"
-          />
+          <image :src="item.cover" mode="scaleToFill" />
         </view>
         <!-- 商品描述 -->
         <view class="desc">
-          <view class="title">认养成都小黑猪,过年吃土猪</view>
-          <view class="harvest">收货方式：到期自提</view>
+          <view class="title">{{ item.title }}</view>
+          <view class="harvest">收货方式：{{ ways[item.ways] }}</view>
           <view class="buy">
-            <view class="price">￥115/只</view>
+            <view class="price">￥{{ item.price }}/只</view>
             <view class="button">立即认养</view>
           </view>
         </view>

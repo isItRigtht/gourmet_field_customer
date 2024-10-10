@@ -48,7 +48,7 @@ const onLease = async () => {
   if (res.msg === '成功') {
     uni.showToast({
       title: '租赁成功',
-      icon: 'none'
+      icon: 'success'
     });
     setTimeout(() => {
       uni.navigateTo({

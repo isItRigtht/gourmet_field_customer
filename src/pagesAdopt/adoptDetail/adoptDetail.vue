@@ -1,52 +1,107 @@
 <script setup lang="ts">
-import CounterBox from '@/components/CounterBox.vue'
-import FooterBar from '@/components/FooterBar.vue'
-import { onMounted, ref } from 'vue'
-const count = ref(0)
+import { getAdoptDetailAPI, postAdoptSubmitAPI } from '@/api/adopt';
+import CounterBox from '@/components/CounterBox.vue';
+import FooterBar from '@/components/FooterBar.vue';
+import { IAdoptDetail } from '@/types/adopt';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+const count = ref(0);
 // 是否同意协议
-const isAgreed = ref(false)
+const isAgreed = ref(false);
 // 组件高度
-const componentHeight = ref(0)
+const componentHeight = ref(0);
+// 详细信息
+const result = ref<IAdoptDetail>();
+const id = ref();
+const price = ref();
+// 收货方式
+const ways = [null, '到期自提', '野餐加工', '冷链配送'];
+// 获取详细信息
+const getAdoptDetail = async (id: string) => {
+  const res = await getAdoptDetailAPI(id);
+  result.value = res.result;
+};
+// 立即认养
+const onAdopt = async () => {
+  if (!isAgreed.value) {
+    uni.showToast({
+      title: '请先同意协议',
+      icon: 'none'
+    });
+    return;
+  }
+  if (!count.value) {
+    uni.showToast({
+      title: '请选择数量',
+      icon: 'none'
+    });
+    return;
+  }
+  const res = await postAdoptSubmitAPI({
+    id: id.value,
+    quantity: count.value
+  });
+  if (res.msg == '成功') {
+    uni.showToast({
+      title: '认养成功',
+      icon: 'none'
+    });
+    setTimeout(() => {
+      uni.navigateTo({
+        url: '/pagesMy/myAdopt/myAdopt'
+      });
+    }, 1000);
+  } else {
+    uni.showToast({
+      title: res.msg,
+      icon: 'none'
+    });
+  }
+};
+
+onLoad((options) => {
+  getAdoptDetail(options.id);
+  id.value = options.id;
+  price.value = options.price;
+});
 </script>
 
 <template>
   <view
+    v-if="result"
     class="container"
     :style="{ paddingBottom: componentHeight + 10 + 'px' }"
   >
     <!-- 轮播图 -->
     <swiper indicator-dots autoplay circular>
-      <swiper-item>
-        <image
-          src="https://t9.baidu.com/it/u=1470780388,2064832163&fm=193"
-          mode="scaleToFill"
-        />
+      <swiper-item v-for="item in result.swiper" :key="item.id">
+        <image :src="item.url" mode="scaleToFill" />
       </swiper-item>
     </swiper>
-    <view class="price">￥1000/头</view>
-    <view class="desc">认养一只小黑猪，过年吃土猪</view>
+    <view class="price">￥{{ price }}/头</view>
+    <view class="desc">{{ result.title }}</view>
     <!-- 项目特点 -->
     <view class="feature">
       <view class="title">项目特点</view>
       <view class="content">
         <view class="item">
           <uni-icons type="paperclip" color="#20c12b" size="40" />
-          <view class="sub-title">CDHZ</view>
+          <view class="sub-title">{{ result.category }}</view>
           <view class="tex">认养品种</view>
         </view>
         <view class="item">
           <uni-icons type="list" color="#20c12b" size="40" />
-          <view class="sub-title">141头</view>
+          <view class="sub-title">{{ result.stock }}头</view>
           <view class="tex">剩余数量</view>
         </view>
         <view class="item">
           <uni-icons type="reload" color="#20c12b" size="40" />
-          <view class="sub-title">1年</view>
+          <view class="sub-title">{{ result.period }}年</view>
           <view class="tex">认养周期</view>
         </view>
         <view class="item">
           <uni-icons type="paperplane" color="#20c12b" size="40" />
-          <view class="sub-title">到期配送实物</view>
+          <view class="sub-title">{{ ways[result.ways] }}</view>
           <view class="tex">认养收获</view>
         </view>
       </view>
@@ -82,7 +137,7 @@ const componentHeight = ref(0)
     <view class="others">
       <view class="deadline">
         <view class="title">截止日期</view>
-        <view class="time">2024-09-29</view>
+        <view class="time">{{ result.deadline }}</view>
       </view>
       <view class="number">
         <view class="title">购买数量</view>
@@ -102,6 +157,7 @@ const componentHeight = ref(0)
     </view>
 
     <FooterBar
+      @tap-button="onAdopt"
       title="立即认养"
       @getHeight="(height) => (componentHeight = height)"
     />

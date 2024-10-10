@@ -3,7 +3,6 @@ import {
   IHomeActivityListItem,
   IHomeAttendanceInfo,
   IHomeBannerItem,
-  IHomeListDetail,
   IHomePointsListItem
 } from '@/types';
 import { http } from '@/utils/http';

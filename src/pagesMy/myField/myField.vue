@@ -1,27 +1,46 @@
 <script setup lang="ts">
+import { getMyFieldAPI } from '@/api/my';
+import { IMyField } from '@/types/my';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
 
+const list = ref<IMyField[]>([]);
+
+// 获取我的租地
+const getMyField = async () => {
+  const res = await getMyFieldAPI();
+  list.value = res.result;
+};
+
+onLoad(() => {
+  getMyField();
+});
 </script>
 
 <template>
   <view class="container">
-    <view class="item">
-      <view class="title">成都天府绿道土地</view>
-      <view class="body"><image
-        src="https://img1.baidu.com/it/u=3160719274,540765604&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=800"
-        mode="scaleToFill"
-      />
-      <view class="content">
-        <view class="type">2㎡迷你小菜园</view>
-        <view class="period">租赁时长：1年</view>
-        <view class="deadline">到期日期：2025-09-02</view>
+    <view v-for="item in list" :key="item.id" class="item">
+      <view class="title">{{ item.title }}</view>
+      <view class="body"
+        ><image :src="item.cover" mode="scaleToFill" />
+        <view class="content">
+          <view class="type">{{ item.area }}</view>
+          <view class="period">租赁时长：{{ item.period }}年</view>
+          <view class="deadline">
+            到期日期：{{
+              parseInt(item.startDate.slice(0, 4)) +
+              item.period +
+              item.startDate.slice(4)
+            }}
+          </view>
+        </view>
       </view>
-    </view>
     </view>
   </view>
 </template>
 
 <style scoped lang="scss">
-.container{
+.container {
   padding: 30rpx;
   .item {
     box-shadow: 0 0 10rpx rgba(125, 125, 125, 0.836);

@@ -1,78 +1,91 @@
 <script setup lang="ts">
+import { postMyOrderSubmitAPI } from '@/api/order';
+import { getShopDetailAPI } from '@/api/shop';
 import FooterBar from '@/components/FooterBar.vue';
-import { ref } from 'vue';
+import { IShopDetail } from '@/types/shop';
+import { onLoad, resolveEasycom } from '@dcloudio/uni-app';
+import { ref, render } from 'vue';
 // sku组件配置参数
 // 开关响应式数据
 const isShow = ref(false);
-// 点击打开sku组件
-const openSku = () => {
-  isShow.value = true;
-  console.log('点击了');
-};
+const id = ref();
 // 组件高度
 const componentHeight = ref(0);
-// sku模拟数据
+// sku数据模板
 const skuData = ref({
-  _id: '002',
-  name: '成都西红柿',
-  goods_thumb:
-    'https://img2.baidu.com/it/u=2699463816,353268376&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=1120',
-  sku_list: [
-    {
-      _id: '004',
-      goods_id: '002',
-      goods_name: '成都西红柿',
-      image:
-        'https://img2.baidu.com/it/u=302335861,1966518666&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=667',
-      price: 1100,
-      sku_name_arr: ['精品小果一斤'],
-      stock: 100
-    },
-    {
-      _id: '005',
-      goods_id: '002',
-      goods_name: '成都西红柿',
-      image:
-        'https://img2.baidu.com/it/u=2699463816,353268376&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=1120',
-      price: 2100,
-      sku_name_arr: ['香甜大果一斤'],
-      stock: 80
-    }
-  ],
+  _id: '',
+  name: '',
+  goods_thumb: '',
+  sku_list: [],
   spec_list: [
     {
       name: '规格',
-      list: [
-        {
-          name: '精品小果一斤'
-        },
-        {
-          name: '香甜大果一斤'
-        }
-      ]
+      list: []
     }
   ]
+});
+// 获取结果
+const result = ref<IShopDetail>();
+// 获取数据
+const getShopDetail = async (id: string) => {
+  const res = await getShopDetailAPI(id);
+  result.value = res.result;
+};
+// 渲染sku
+const renderSku = () => {
+  skuData.value._id = id.value;
+  skuData.value.name = result.value.title;
+  skuData.value.goods_thumb = result.value.swiper[0].url;
+  skuData.value.sku_list = result.value.sku.map((item) => ({
+    _id: item.id,
+    goods_id: id.value,
+    goods_name: result.value.title,
+    image: result.value.detail[0].url,
+    price: 100 * parseInt(result.value.price),
+    sku_name_arr: item.specification.split(' '),
+    stock: item.stock
+  }));
+  skuData.value.spec_list[0].list = result.value.sku.map((item) => ({
+    name: item.specification
+  }));
+};
+// 立即购买
+const onBuy = async (ev) => {
+  const res = await postMyOrderSubmitAPI({
+    id: id.value,
+    skuId: ev._id,
+    quantity: ev.buy_num
+  });
+  console.log(res);
+};
+
+onLoad(async (options) => {
+  id.value = options.id;
+  await getShopDetail(options.id);
+  renderSku();
 });
 </script>
 
 <template>
   <view
+    v-if="result"
     class="container"
     :style="{ paddingBottom: componentHeight + 10 + 'px' }"
   >
     <swiper indicator-dots autoplay circular>
       <swiper-item>
         <image
-          v-for="item in 4"
-          src="https://img0.baidu.com/it/u=3912263632,2759588619&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=566"
+          v-for="item in result.swiper"
+          :key="item.id"
+          :src="item.url"
           mode="scaleToFill"
         />
       </swiper-item>
     </swiper>
-    <view class="price">￥99.00</view>
+    <view class="price">￥{{ result.price }}</view>
     <view class="desc">
-      <view class="title">你电正宗红苹果</view>
-      <view class="detail">好吃不上火,你值得拥有的好苹果</view>
+      <view class="title">{{ result.title }}</view>
+      <view class="detail">{{ result.desc }}</view>
     </view>
     <view class="service"
       ><view class="head">服务</view
@@ -81,15 +94,16 @@ const skuData = ref({
     <view class="more">商品详情</view>
     <view class="img">
       <image
-        v-for="item in 4"
-        src="https://img0.baidu.com/it/u=1340947294,743907301&fm=253&fmt=auto&app=138&f=JPEG?w=755&h=500"
+        v-for="item in result.detail"
+        :key="item.id"
+        :src="item.url"
         mode="scaleToFill"
       />
     </view>
   </view>
   <!-- 底部操作栏 -->
   <FooterBar
-    @tapButton="openSku"
+    @tapButton="isShow = true"
     @getHeight="(height) => (componentHeight = height)"
     title="立即购买"
   />
@@ -99,6 +113,7 @@ const skuData = ref({
     mode="3"
     theme="green"
     :localdata="skuData"
+    @buy="onBuy"
   >
   </vk-data-goods-sku-popup>
 </template>

@@ -1,5 +1,3 @@
-import { IPointsSku } from "./global";
-
 /** 轮播图数组元素数据类型 */
 export type IHomeBannerItem = {
   /** 轮播图id */
@@ -61,20 +59,3 @@ export type IHomePointsListItem = {
   /** 积分兑换价格 */
   cost: string;
 };
-
-/**
- * 积分兑换商品详情类型
- */
-export type IHomeListDetail = {
-  /** 轮播图 */
-  swiper: {id: string; url: string}[];
-  /** 最低积分数 */
-  cost: string;
-  /** 商品标题 */
-  title: string;
-  /** 商品描述 */
-  desc: string;
-  /** sku */
-  sku: IPointsSku[];
-  detail: {id: string; url: string}[];
-}
