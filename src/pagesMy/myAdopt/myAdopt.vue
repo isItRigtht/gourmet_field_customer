@@ -1,17 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getMyAdoptAPI } from '@/api/my';
+import { IMyAdopt } from '@/types/my';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+
+const list = ref<IMyAdopt[]>([]);
+
+// 获取我的认养
+const getMyAdopt = async () => {
+  const res = await getMyAdoptAPI();
+  list.value = res.result;
+};
+
+onLoad(() => {
+  getMyAdopt();
+});
+</script>
 
 <template>
   <view class="container">
-    <view class="item">
-      <view class="title">认养一只小黑猪，过年吃土猪</view>
+    <view v-for="item in list" :key="item.id" class="item">
+      <view class="title">{{ item.title }}</view>
       <view class="body"
-        ><image
-          src="https://t9.baidu.com/it/u=1470780388,2064832163&fm=193"
-          mode="scaleToFill"
-        />
+        ><image :src="item.cover" mode="scaleToFill" />
         <view class="content">
-          <view class="period">认养数目：2头</view>
-          <view class="deadline">收货日期：2025-06-02</view>
+          <view class="period">认养数目：{{ item.quantity }}头</view>
+          <view class="deadline">认养周期：{{ item.period }}</view>
         </view>
       </view>
     </view>
