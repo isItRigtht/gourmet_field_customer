@@ -1,26 +1,42 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getFieldListAPI } from '@/api/field';
+import { IFieldList } from '@/types/field';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+const list = ref<IFieldList[]>([]);
+// 获取土地列表
+const getFieldList = async () => {
+  const res = await getFieldListAPI();
+  list.value = res.result;
+};
+
+onLoad(()=>{
+  getFieldList();
+})
+</script>
 
 <template>
   <view class="container">
     <navigator
-      v-for="item in 4"
+      v-for="item in list"
+      :key="item.id"
       class="card"
-      url="/pagesField/fieldDetail/fieldDetail"
+      :url="`/pagesField/fieldDetail/fieldDetail?id=${item.id}&price=${item.price}`"
       open-type="navigate"
       hover-class="navigator-hover"
     >
       <view class="image">
         <view class="logo">租</view>
         <image
-          src="https://img1.baidu.com/it/u=3160719274,540765604&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=800"
+          :src="item.cover"
           mode="scaleToFill"
         />
       </view>
       <view class="content">
-        <view class="title">成都纯正天府绿道田地</view>
-        <view class="desc">在喧嚣城市中做一个悠闲的农夫</view>
+        <view class="title">{{item.title}}</view>
+        <view class="desc">{{ item.desc }}</view>
         <view class="bottom">
-          <view class="price">￥100元/平方米/年</view>
+          <view class="price">￥{{item.price}}元/平方米/年</view>
           <view class="button">立即租地</view>
         </view>
       </view>

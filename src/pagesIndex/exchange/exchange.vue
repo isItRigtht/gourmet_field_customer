@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { IHomePointsListItem } from "@/types";
-import { getHomePointsListAPI } from "@/api";
-import { onLoad } from "@dcloudio/uni-app";
+import { ref } from 'vue';
+import { IHomePointsListItem } from '@/types';
+import { getHomePointsListAPI } from '@/api';
+import { onLoad } from '@dcloudio/uni-app';
 const list = ref<IHomePointsListItem[]>([]);
 // 获取数据
 const getList = async () => {
@@ -10,9 +10,9 @@ const getList = async () => {
   list.value = res.result;
 };
 
-onLoad(()=>{
+onLoad(() => {
   getList();
-})
+});
 </script>
 
 <template>
@@ -20,10 +20,7 @@ onLoad(()=>{
     <view v-for="item in list" :key="item.id" class="item">
       <view class="image">
         <view class="logo">兑</view>
-        <image
-          :src="item.cover"
-          mode="scaleToFill"
-        />
+        <image :src="item.cover" mode="scaleToFill" />
       </view>
       <view class="desc">{{ item.title }}</view>
       <view class="footer">
@@ -47,7 +44,7 @@ onLoad(()=>{
     .image {
       position: relative;
       .logo {
-        position:absolute;
+        position: absolute;
         left: 30rpx;
         font-size: 50rpx;
         color: white;

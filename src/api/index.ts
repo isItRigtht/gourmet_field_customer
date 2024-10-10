@@ -3,6 +3,7 @@ import {
   IHomeActivityListItem,
   IHomeAttendanceInfo,
   IHomeBannerItem,
+  IHomeListDetail,
   IHomePointsListItem
 } from '@/types';
 import { http } from '@/utils/http';
@@ -73,3 +74,4 @@ export const getHomePointsListAPI = () => {
     url: '/home/points/list'
   });
 }
+

@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import SortGoods from '@/components/SortGoods.vue'
 import SearchBox from '@/components/SearchBox.vue'
 import FieldList from './components/FieldList.vue'
-
-// 土地数据 TODO: 调接口
-
 </script>
 
 <template>

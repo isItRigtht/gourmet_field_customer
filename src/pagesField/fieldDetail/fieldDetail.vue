@@ -1,50 +1,103 @@
 <script setup lang="ts">
-import FooterBar from '@/components/FooterBar.vue'
-import { PickerViewOnChangeEvent } from '@uni-helper/uni-types'
-import { ref } from 'vue'
+import { getFieldDetailAPI, postFieldRentAPI } from '@/api/field';
+import FooterBar from '@/components/FooterBar.vue';
+import { IFieldCategory, IFieldDetail } from '@/types/field';
+import { onLoad } from '@dcloudio/uni-app';
+import { PickerViewOnChangeEvent } from '@uni-helper/uni-types';
+import { ref } from 'vue';
 // 租赁周期数据
-const period = ref(['一年', '两年', '三年'])
+const period = ref(['一年', '两年', '三年']);
 // 显示下标
-const index = ref()
+const index = ref();
 // 组件高度
-const componentHeight = ref(0)
+const componentHeight = ref(0);
+// 选择小块地
+const selectedId = ref('');
+const onSelect = (item: IFieldCategory) => {
+  if (item.state) {
+    uni.showToast({
+      title: '该土地已出租',
+      icon: 'none'
+    });
+  } else {
+    selectedId.value = item.subId;
+  }
+};
 // 租赁按钮点击事件
+const id = ref();
 const onLease = async () => {
-  await uni.showToast({
-    title: '模拟支付成功',
-    icon: 'success'
-  })
-  // 跳转到我的租地页面
-  setTimeout(() => {
-    uni.navigateTo({
-      url: '/pagesMy/myField/myField'
-    })
-  }, 500)
-}
+  if (!selectedId.value) {
+    uni.showToast({
+      title: '请选择小块地',
+      icon: 'none'
+    });
+    return;
+  }
+  if (!index.value) {
+    uni.showToast({
+      title: '请选择租赁期限',
+      icon: 'none'
+    });
+    return;
+  }
+  const res = await postFieldRentAPI({
+    id: id.value,
+    subId: selectedId.value,
+    period: parseInt(index.value) + 1
+  });
+  if (res.msg === '成功') {
+    uni.showToast({
+      title: '租赁成功',
+      icon: 'none'
+    });
+    setTimeout(() => {
+      uni.navigateTo({
+        url: '/pagesMy/myField/myField'
+      });
+    }, 1000);
+  }
+};
+
+// 详情数据
+const result = ref<IFieldDetail>();
+// 单价
+const price = ref();
+// 获取详情
+const getFieldDetail = async (id: string) => {
+  const res = await getFieldDetailAPI(id);
+  result.value = res.result;
+};
+
+onLoad((options) => {
+  getFieldDetail(options.id);
+  id.value = options.id;
+  price.value = options.price;
+});
 </script>
 
 <template>
-  <view class="container" :style="{ height: componentHeight + 10 + 'px' }">
+  <view
+    v-if="result"
+    class="container"
+    :style="{ height: componentHeight + 10 + 'px' }"
+  >
     <!-- 轮播图 -->
     <swiper indicator-dots autoplay circular>
-      <swiper-item v-for="item in 4">
-        <image
-          src="https://img1.baidu.com/it/u=3160719274,540765604&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=800"
-          mode="scaleToFill"
-        />
+      <swiper-item v-for="item in result.swiper" :key="item.id">
+        <image :src="item.url" mode="scaleToFill" />
       </swiper-item>
     </swiper>
     <!-- 介绍 -->
     <view class="introduction">
-      <view class="price">￥100/平方米/年</view>
-      <view class="title">天府绿道纯正土地</view>
-      <view class="desc">当一个农夫</view>
+      <view class="price">￥{{ price }} /平方米/年</view>
+      <view class="title">{{ result.title }}</view>
+      <view class="desc">{{ result.desc }}</view>
     </view>
     <!-- 定位 -->
     <view class="location">
       <view class="symbol"></view>
       <uni-icons type="location" color="" size="24" />
-      <view class="address">成都市郫都区电子科技大学</view>
+      <view class="address">{{ result.location }}</view>
     </view>
     <!-- 选择土地 -->
     <view class="select">
@@ -68,8 +121,14 @@ const onLease = async () => {
     </view>
     <!-- 种类选择 -->
     <view class="category">
-      <view v-for="item in 8" class="item">
-        <view class="img">2㎡迷你菜地</view>
+      <view v-for="item in result.category" :key="item.subId" class="item">
+        <view
+          @tap="onSelect(item)"
+          class="img"
+          :class="{ busy: item.state, selected: selectedId === item.subId }"
+        >
+          {{ item.area }}
+        </view>
         <uni-icons type="checkbox" color="#af551e" size="24" />
       </view>
     </view>
@@ -99,8 +158,9 @@ const onLease = async () => {
     </view>
     <view class="img">
       <image
-        v-for="item in 4"
-        src="https://p1.itc.cn/q_70/images03/20231118/37fd136e843e4739b777522174a7e270.jpeg"
+        v-for="item in result.detail"
+        :key="item.id"
+        :src="item.url"
         mode="scaleToFill"
       />
     </view>
@@ -196,6 +256,12 @@ const onLease = async () => {
         margin-bottom: 10rpx;
         border-radius: 10rpx;
         font-size: 24rpx;
+      }
+      .selected {
+        background-color: #6e4306;
+      }
+      .busy {
+        background-color: #ad9484;
       }
     }
   }
