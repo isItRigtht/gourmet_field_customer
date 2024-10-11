@@ -1,17 +1,58 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
+import { deleteMyAddressDeleteAPI, getMyAddressListAPI } from '@/api/address';
+import { IMyAddressList } from '@/types/address';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+// 抽屉Ref
+const drawerRef = ref();
 // 默认地址
-const activeIndex = ref(0)
+const activeIndex = ref(0);
+const list = ref<IMyAddressList[]>([]);
+// 获取地址列表
+const getAddressList = async () => {
+  const res = await getMyAddressListAPI();
+  activeIndex.value = res.result.findIndex((item) => item.isDefault);
+  list.value = res.result;
+};
+// 删除地址
+const onDelete = async (id: string) => {
+  uni.showModal({
+    title: '提示',
+    content: '确定删除该地址吗？',
+    success: async (res) => {
+      if (res.confirm) {
+        // 删除
+        const res = await deleteMyAddressDeleteAPI(id);
+        if (res.msg == '成功') {
+          uni.showToast({
+            title: '删除成功',
+            icon: 'none'
+          });
+          getAddressList();
+        } else {
+          uni.showToast({
+            title: res.msg,
+            icon: 'none'
+          });
+        }
+      }
+    }
+  });
+};
+// 添加地址
+
+onLoad(() => {
+  getAddressList();
+});
 </script>
 
 <template>
   <view class="container">
-    <view v-for="(item, index) in 4" class="item">
-      <view class="name-and-phone"> 小邹,18569785462</view>
-      <view class="address"
-        >四川省 成都市 郫都区 西源小道 6602号 电子神技大学</view
-      >
+    <view v-for="(item, index) in list" :key="item.id" class="item">
+      <view class="name-and-phone">
+        {{ item.receiver }} {{ item.contact }}
+      </view>
+      <view class="address"> {{ item.area }} {{ item.address }} </view>
       <!-- 分割线 -->
       <view class="line"></view>
       <view class="footer">
@@ -25,9 +66,15 @@ const activeIndex = ref(0)
         </view>
         <view class="edit-and-delete">
           <view class="edit btn">编辑</view>
-          <view class="delete btn">删除</view>
+          <view @tap="onDelete(item.id)" class="delete btn">删除</view>
         </view>
       </view>
+    </view>
+    <view @tap="drawerRef.open()" class="button">添加收货地址</view>
+    <view>
+      <uni-drawer :width="400" ref="drawerRef">
+        
+      </uni-drawer>
     </view>
   </view>
 </template>
@@ -76,6 +123,16 @@ const activeIndex = ref(0)
         }
       }
     }
+  }
+  .button {
+    margin: 50rpx auto;
+    padding: 10rpx;
+    width: 80%;
+    text-align: center;
+    background-color: #20c12b;
+    color: white;
+    font-size: 40rpx;
+    border-radius: 20rpx;
   }
 }
 </style>

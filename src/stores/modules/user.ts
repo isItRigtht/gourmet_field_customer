@@ -1,3 +1,4 @@
+import { IMyProfile } from '@/types/my';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -5,10 +6,13 @@ export const useUserStore = defineStore(
   'user',
   () => {
     // 用户信息
-    const userInfo = ref();
+    const userInfo = ref<IMyProfile>();
     // 保存用户信息，登录时使用
-    const setUserInfo = (info: any) => {
-      userInfo.value = info;
+    const setUserInfo = (info: IMyProfile) => {
+      userInfo.value = {
+        ...userInfo.value,
+        ...info
+      };
     };
     // 清空用户信息，退出时使用
     const clearUserInfo = () => {

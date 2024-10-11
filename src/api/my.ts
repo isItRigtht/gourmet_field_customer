@@ -1,4 +1,4 @@
-import { IMyAdopt, IMyField } from '@/types/my';
+import { IMyAdopt, IMyField, IMyProfile } from '@/types/my';
 import { http } from '@/utils/http';
 
 /**
@@ -18,3 +18,22 @@ export const getMyAdoptAPI = () => {
     url: '/my/adopt'
   });
 };
+
+/**
+ * 获取个人信息
+ */
+export const getMyProfileAPI = () => {
+  return http<IMyProfile>({
+    url: '/my/profile'
+  });
+};
+
+/** 修改个人信息 */
+export const putMyEditProfileAPI = (data: Partial<IMyProfile>) => {
+  return http({
+    url: '/my/editProfile',
+    method: 'PUT',
+    data
+  });
+};
+

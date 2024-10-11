@@ -8,7 +8,7 @@
 
 import { useUserStore } from '@/stores';
 // 基地址
-const baseURL = 'https://113.54.196.103';
+const baseURL = 'http://127.0.0.1:4523/m1/4866623-4522371-default';
 // 拦截器
 const httpInterceptor = {
   // 拦截前触发

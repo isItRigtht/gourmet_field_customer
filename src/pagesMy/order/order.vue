@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { getMyOrderListAPI } from '@/api/order';
+import { IMyOrderList } from '@/types/order';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
 
-// 获取屏幕安全距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
 // tab数据
 const orderTabs = ref([
   { orderState: 0, title: '全部' },
@@ -10,9 +11,20 @@ const orderTabs = ref([
   { orderState: 2, title: '待发货' },
   { orderState: 3, title: '待收货' },
   { orderState: 4, title: '待评价' }
-])
+]);
 // 当前下标
-const currentIndex = ref(0)
+const currentIndex = ref(0);
+// 订单列表
+const listAll = ref<IMyOrderList[]>([]);
+// 获取订单列表
+const getMyOrderList = async () => {
+  const res = await getMyOrderListAPI();
+  listAll.value = res.result;
+};
+
+onLoad(() => {
+  getMyOrderList();
+});
 </script>
 
 <template>
@@ -39,29 +51,72 @@ const currentIndex = ref(0)
       :current="currentIndex"
     >
       <swiper-item v-for="item in orderTabs" :key="item.title">
-        <view class="order" v-for="order in 4" :key="order">
+        <view
+          v-if="item.orderState === 0"
+          class="order"
+          v-for="order in listAll"
+          :key="order.id"
+        >
           <view class="title-and-state">
-            <view class="shop">成都小苹果销售店</view>
-            <view class="state">待发货</view>
+            <view class="shop">{{ order.title }}</view>
+            <view class="state">{{
+              orderTabs.filter((item) => item.orderState == order.state)[0]
+                .title
+            }}</view>
           </view>
           <view class="content">
             <view class="img">
-              <image
-                src="https://img0.baidu.com/it/u=1735024561,2929805548&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=333"
-                mode="scaleToFill"
-              />
+              <image :src="order.cover" mode="scaleToFill" />
             </view>
             <view class="info">
-              <view class="title">成都小苹果</view>
+              <view class="title">{{ order.desc }}</view>
               <view class="protection">退货包运费保障中</view>
             </view>
             <view class="price-and-count"
-              ><view class="price">￥98</view
-              ><view class="count">x1</view></view
+              ><view class="price">￥{{ order.price }}</view
+              ><view class="count">x{{ order.quantity }}</view></view
             >
           </view>
           <view class="footer">
-            <view class="total-price">实付：￥98 <text>(免运费)</text></view>
+            <view class="total-price">
+              实付：￥{{ order.price * order.quantity }}
+              <text>(免运费)</text>
+            </view>
+            <view class="action"><view class="btn">确认收货</view></view>
+          </view>
+        </view>
+        <view
+          v-else
+          class="order"
+          v-for="order in listAll.filter(
+            (order) => order.state == item.orderState
+          )"
+        >
+          <view class="title-and-state">
+            <view class="shop">{{ order.title }}</view>
+            <view class="state">{{
+              orderTabs.filter((item) => item.orderState == order.state)[0]
+                .title
+            }}</view>
+          </view>
+          <view class="content">
+            <view class="img">
+              <image :src="order.cover" mode="scaleToFill" />
+            </view>
+            <view class="info">
+              <view class="title">{{ order.desc }}</view>
+              <view class="protection">退货包运费保障中</view>
+            </view>
+            <view class="price-and-count"
+              ><view class="price">￥{{ order.price }}</view
+              ><view class="count">x{{ order.quantity }}</view></view
+            >
+          </view>
+          <view class="footer">
+            <view class="total-price">
+              实付：￥{{ order.price * order.quantity }}
+              <text>(免运费)</text>
+            </view>
             <view class="action"><view class="btn">确认收货</view></view>
           </view>
         </view>

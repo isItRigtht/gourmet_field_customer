@@ -1,9 +1,24 @@
 <script setup lang="ts">
-import CustomerService from '@/components/CustomerService.vue'
+import { getMyProfileAPI } from '@/api/my';
+import CustomerService from '@/components/CustomerService.vue';
+import { useUserStore } from '@/stores';
+import { onLoad } from '@dcloudio/uni-app';
+
+// 获取用户信息
+const userStore = useUserStore();
+// 获取个人信息
+const getMyProfile = async () => {
+  const res = await getMyProfileAPI();
+  userStore.setUserInfo(res.result);
+};
+
+onLoad(() => {
+  getMyProfile();
+});
 </script>
 
 <template>
-  <view class="profile">
+  <view v-if="userStore.userInfo" class="profile">
     <navigator
       class="avatar"
       url="/pagesMy/profile/profile"
@@ -11,7 +26,7 @@ import CustomerService from '@/components/CustomerService.vue'
       hover-class="navigator-hover"
     >
       <image
-        src="https://i0.hdslb.com/bfs/archive/520da431da83bc79373e15888ed2cfeb20307b2e.jpg"
+        :src="userStore.userInfo.avatar || '/static/avatar.png' "
         mode="scaleToFill"
       />
     </navigator>
@@ -22,7 +37,7 @@ import CustomerService from '@/components/CustomerService.vue'
         open-type="navigate"
         hover-class="navigator-hover"
       >
-        法内狂徒罗翔
+        {{ userStore.userInfo.nickname || '点击设置昵称' }}
       </navigator>
       <navigator
         class="address"

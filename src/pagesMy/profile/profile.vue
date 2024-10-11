@@ -1,68 +1,169 @@
 <script setup lang="ts">
-
-import { RegionPickerOnChangeEvent } from '@uni-helper/uni-types';
-import { ref } from 'vue'
+import { getMyProfileAPI, putMyEditProfileAPI } from '@/api/my';
+import { useUserStore } from '@/stores';
+import {
+  DatePickerOnChangeEvent,
+  RegionPickerOnChangeEvent
+} from '@uni-helper/uni-types';
+import { ref } from 'vue';
 
 // 修改头像
-const tempFilePath = ref('')
 const onAvatarChange = () => {
   uni.chooseMedia({
     count: 1,
     mediaType: ['image'],
     // 选择成功回调函数
     success: (success) => {
-      // 本地路径
-      tempFilePath.value = success.tempFiles[0].tempFilePath
+      uni.uploadFile({
+        url: '/my/avatar',
+        filePath: success.tempFiles[0].tempFilePath,
+        name: 'file',
+        success: async (res) => {
+          if (res.statusCode === 200) {
+            getMyProfile();
+            // 提示
+            uni.showToast({
+              title: '头像修改成功',
+              icon: 'success'
+            });
+          } else {
+            uni.showToast({
+              title: '修改失败',
+              icon: 'none'
+            });
+          }
+        }
+      });
     }
-  })
-}
-// 测试地区数据
-const area = ref(['广东省', '深圳市', '南山区'])
+  });
+};
+// 昵称输入框
+const inputRef = ref();
+// 获取用户状态
+const userStore = useUserStore();
+
+// 获取个人信息
+const getMyProfile = async () => {
+  const res = await getMyProfileAPI();
+  userStore.setUserInfo(res.result);
+};
+// 提交昵称
+const onPutNickname = async (value) => {
+  const res = await putMyEditProfileAPI({ nickname: value });
+  if (res.msg === '成功') {
+    uni.showToast({
+      title: '昵称修改成功',
+      icon: 'success'
+    });
+    getMyProfile();
+  } else {
+    uni.showToast({
+      title: res.msg,
+      icon: 'none'
+    });
+  }
+};
+// 提交性别
+const onPutGender = async (value) => {
+  const res = await putMyEditProfileAPI({ gender: value });
+  if (res.msg === '成功') {
+    getMyProfile();
+  } else {
+    uni.showToast({
+      title: res.msg,
+      icon: 'none'
+    });
+  }
+};
+// 提交地址
+const onPutArea = async (e: RegionPickerOnChangeEvent) => {
+  const res = await putMyEditProfileAPI({ area: e.detail.value.join(' ') });
+  if (res.msg === '成功') {
+    getMyProfile();
+  } else {
+    uni.showToast({
+      title: res.msg,
+      icon: 'none'
+    });
+  }
+};
+
+// 提交生日
+const onPutDate = async (e: DatePickerOnChangeEvent) => {
+  console.log(e.detail.value);
+  const res = await putMyEditProfileAPI({ birthday: e.detail.value });
+  if (res.msg === '成功') {
+    getMyProfile();
+  } else {
+    uni.showToast({
+      title: res.msg,
+      icon: 'none'
+    });
+  }
+};
 </script>
 
 <template>
-  <view class="container">
+  <view v-if="userStore.userInfo" class="container">
     <!-- 头像 -->
     <view @tap="onAvatarChange" class="avatar item">
       <view class="text">头像</view>
       <image
         class="content"
-        :src="
-          tempFilePath ||
-          'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fgroup_topic%2Fl%2Fpublic%2Fp515017572.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1727586039&t=2b4b407efac4f2a41e9d9dcdc2864c55'
-        "
+        :src="userStore.userInfo.avatar"
         mode="scaleToFill"
       />
     </view>
     <!-- 昵称 -->
-    <view class="nick-name item">
+    <view @tap="inputRef.popup.open()" class="nick-name item">
       <view class="text">昵称</view>
-      <view class="content">法内狂徒罗翔</view>
+      <view class="content">{{ userStore.userInfo.nickname }}</view>
     </view>
+    <uni-popup ref="inputDialog" type="dialog">
+      <uni-popup-dialog
+        ref="inputRef"
+        mode="input"
+        title="修改昵称"
+        value="对话框预置提示内容!"
+        :placeholder="userStore.userInfo.nickname || '请输入昵称'"
+        @confirm="onPutNickname"
+      ></uni-popup-dialog>
+    </uni-popup>
     <!-- 性别 -->
     <view class="gender item">
       <view class="text">性别</view>
-      <view class="content">男</view>
+      <picker
+        mode="selector"
+        :value="userStore.userInfo.gender"
+        :range="['女', '男']"
+        @change="onPutGender"
+      >
+        <view class="nativeView" style="padding-left: 200rpx">
+          {{ userStore.userInfo.gender ? '男' : '女' }}
+        </view>
+      </picker>
     </view>
     <!-- 地区 -->
     <view class="area item">
       <view class="text">地区</view>
       <picker
         mode="region"
-        :value="area"
-        @change="
-          (e: RegionPickerOnChangeEvent) => {
-            area = e.detail.value
-          }
-        "
+        :value="userStore.userInfo.area.split(' ')"
+        @change="onPutArea"
       >
-        {{ area.join(' ') }}
+        {{ userStore.userInfo.area }}
       </picker>
     </view>
     <!-- 生日 -->
     <view class="birthday item">
       <view class="text">生日</view>
-      <view class="content">1999-01-01</view>
+      <picker
+        mode="date"
+        :value="userStore.userInfo.birthday"
+        @change="onPutDate"
+      >
+        {{ userStore.userInfo.birthday }}
+      </picker>
     </view>
   </view>
 </template>

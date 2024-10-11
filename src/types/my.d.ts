@@ -25,3 +25,19 @@ export type IMyAdopt = {
   /** 认养数量 */
   quantity: number;
 };
+
+/** 个人信息 */
+export type IMyProfile = {
+  /** 头像 */
+  avatar?: string;
+  /** 昵称 */
+  nickname?: string;
+  /** 性别 */
+  gender?: number;
+  /** 省 市 区 */
+  area?: string;
+  /** 生日 */
+  birthday?: string;
+  /** token */
+  token?: string;
+};
