@@ -31,3 +31,13 @@ export const postMyAddressSubmitAPI = (data: IMyAddressList) => {
     data
   });
 };
+
+/**
+ * 获取某一地址
+ */
+export const getMyAddressAPI = (id: string) => {
+  return http<IMyAddressList>({
+    url: `/my/address/${id}`,
+    method: 'GET'
+  });
+};

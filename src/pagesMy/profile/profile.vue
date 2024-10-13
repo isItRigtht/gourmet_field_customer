@@ -168,6 +168,10 @@ const onPutDate = async (e: DatePickerOnChangeEvent) => {
   </view>
 </template>
 <style>
+.uni-forms-item__content {
+  display: flex;
+  justify-content: center;
+}
 page {
   background-color: #e7e6e6;
 }
