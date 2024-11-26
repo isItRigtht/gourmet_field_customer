@@ -56,7 +56,15 @@ const onBuy = async (ev) => {
     skuId: ev._id,
     quantity: ev.buy_num
   });
-  console.log(res);
+  // 跳转到订单页面
+  uni.navigateTo({
+    url: '/pagesMy/order/order'
+  });
+  // 提示购买成功
+  uni.showToast({
+    title: '购买成功',
+    icon: 'success'
+  });
 };
 
 onLoad(async (options) => {
